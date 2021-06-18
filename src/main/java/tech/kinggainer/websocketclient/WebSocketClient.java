@@ -42,7 +42,7 @@ public abstract class WebSocketClient {
     /**
      * GUID used when processing Sec-WebSocket-Accept response header
      */
-    private static final String GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+    private static final String GUID = "";
 
     /**
      * Denotes a continuation frame
@@ -815,23 +815,23 @@ public abstract class WebSocketClient {
                             "Invalid value for header Connection. Expected: upgrade, received: " + connectionValue);
                 }
 
-                Header[] secWebSocketAcceptHeader = response.getHeaders("Sec-WebSocket-Accept");
-                if (secWebSocketAcceptHeader.length == 0) {
-                    throw new InvalidServerHandshakeException("There is no header named Sec-WebSocket-Accept");
-                }
-                String secWebSocketAcceptValue = secWebSocketAcceptHeader[0].getValue();
-                if (secWebSocketAcceptValue == null) {
-                    throw new InvalidServerHandshakeException("There is no value for header Sec-WebSocket-Accept");
-                }
+//                Header[] secWebSocketAcceptHeader = response.getHeaders("Sec-WebSocket-Accept");
+//                if (secWebSocketAcceptHeader.length == 0) {
+//                    throw new InvalidServerHandshakeException("There is no header named Sec-WebSocket-Accept");
+//                }
+//                String secWebSocketAcceptValue = secWebSocketAcceptHeader[0].getValue();
+//                if (secWebSocketAcceptValue == null) {
+//                    throw new InvalidServerHandshakeException("There is no value for header Sec-WebSocket-Accept");
+//                }
 
-                String keyConcatenation = secWebSocketKey + GUID;
-                byte[] sha1 = DigestUtils.sha1(keyConcatenation);
-                String secWebSocketAccept = Base64.encodeBase64String(sha1);
-                if (!secWebSocketAcceptValue.equals(secWebSocketAccept)) {
-                    throw new InvalidServerHandshakeException(
-                            "Invalid value for header Sec-WebSocket-Accept. Expected: " + secWebSocketAccept
-                                    + ", received: " + secWebSocketAcceptValue);
-                }
+//                String keyConcatenation = secWebSocketKey + GUID;
+//                byte[] sha1 = DigestUtils.sha1(keyConcatenation);
+//                String secWebSocketAccept = Base64.encodeBase64String(sha1);
+//                if (!secWebSocketAcceptValue.equals(secWebSocketAccept)) {
+//                    throw new InvalidServerHandshakeException(
+//                            "Invalid value for header Sec-WebSocket-Accept. Expected: " + secWebSocketAccept
+//                                    + ", received: " + secWebSocketAcceptValue);
+//                }
             } catch (HttpException e) {
                 throw new InvalidServerHandshakeException(e.getMessage());
             }
